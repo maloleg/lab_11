@@ -23,6 +23,7 @@ private:
     bool Figure2_selected = 0;
     std::vector<Figure*> FirstType_figures;
     std::vector<Figure*> SecondType_figures;
+    Figure *f;
 
 protected:
     void contextMenuEvent(QContextMenuEvent *event);
@@ -37,6 +38,7 @@ public slots:
 	void Figure2(bool checked);
 	void AddFigures();	
 	void DeleteFigures();
+	void FigureClicked();
 };
 
 #endif // MAINWINDOW_H

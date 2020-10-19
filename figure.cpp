@@ -1,10 +1,9 @@
 #include "figure.h"
 
 #include <QPainter>
+#include <iostream>
 
-Figure::Figure(QWidget *parent) :
-    QWidget(parent),
-    flag_paint(false), flag_resize(false)
+Figure::Figure(QWidget *parent) : QWidget(parent), flag_paint(false), flag_resize(false)
 {
 }
 
@@ -36,4 +35,14 @@ void Figure::paintEvent(QPaintEvent *event)
 void Figure::resizeEvent(QResizeEvent *event)
 {
    if( flag_paint && !flag_resize ) flag_resize = true;
+}
+
+void Figure::IsClicked(){
+  std::cout << "yeah\n" << std::flush;
+}
+
+void Figure::mousePressEvent(QMouseEvent *event)
+{
+  // std::cout << "lol\n" << std::flush;
+  emit Clicked();
 }
