@@ -26,7 +26,7 @@ private:
     Figure *f;
 
 protected:
-    void contextMenuEvent(QContextMenuEvent *event);
+    // void contextMenuEvent(QContextMenuEvent *event);
 
 public:
     MainWindow(QWidget *parent = 0);
@@ -38,7 +38,7 @@ public slots:
 	void Figure2(bool checked);
 	void AddFigures();	
 	void DeleteFigures();
-	void FigureClicked();
+	void FigureClicked(std::string Fname);
 };
 
 #endif // MAINWINDOW_H

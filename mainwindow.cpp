@@ -106,8 +106,8 @@ void MainWindow::AddFigures(){
         // Figure *f2 = new Figure(this);
         // f2->move(100,100);
         // f2->show();
-        f = new Figure(this);
-        connect(f, SIGNAL(Clicked()), this, SLOT(FigureClicked()));
+        f = new Figure(this, "1_" + std::to_string(SecondType_figures.size()));
+        connect(f, SIGNAL(Clicked()), f, SLOT(FigureClicked()));
         FirstType_figures.push_back(f);
         FirstType_figures[FirstType_figures.size() - 1]->show();
         FirstType_figures[FirstType_figures.size() - 1]->move(rand()%1000 + 50, rand()%500 + 50);
@@ -117,21 +117,24 @@ void MainWindow::AddFigures(){
         // Figure *f = new Figure(this);
 
 
-        f = new Figure(this);
+        f = new Figure(this, "2_" + std::to_string(SecondType_figures.size()));
+        connect(f, SIGNAL(Clicked()), f, SLOT(FigureClicked()));
         SecondType_figures.push_back(f);
         SecondType_figures[SecondType_figures.size() - 1]->show();
         SecondType_figures[SecondType_figures.size() - 1]->move(rand()%1000 + 50, rand()%500 + 50);
     }
     if (Figure1_selected && !Figure2_selected){
         std::cout << "Figure 1 added" << std::endl;
-        f = new Figure(this);
+        f = new Figure(this, "1_" + std::to_string(SecondType_figures.size()));
+        connect(f, SIGNAL(Clicked()), f, SLOT(FigureClicked()));
         FirstType_figures.push_back(f);
         FirstType_figures[FirstType_figures.size() - 1]->show();
         FirstType_figures[FirstType_figures.size() - 1]->move(rand()%1000 + 50, rand()%500 + 50);
     }
-    if (!Figure1_selected && Figure2_selected) {
+    if (!Figure1_selected && Figure2_selected){
         std::cout << "Figure 2 added" << std::endl;
-        f = new Figure(this);
+        f = new Figure(this, "2_" + std::to_string(SecondType_figures.size()));
+        connect(f, SIGNAL(Clicked()), f, SLOT(FigureClicked()));
         SecondType_figures.push_back(f);
         SecondType_figures[SecondType_figures.size() - 1]->show();
         SecondType_figures[SecondType_figures.size() - 1]->move(rand()%1000 + 50, rand()%500 + 50);
@@ -145,17 +148,30 @@ void MainWindow::DeleteFigures(){
     // layout()->removeAt(FirstType_figures[0]);
     
     
-    if (Figure1_selected && FirstType_figures.size() != 0){
-        FirstType_figures[FirstType_figures.size()-1]->close();
-        FirstType_figures.pop_back();
-        std::cout << "Figure 1 deleted" << std::endl;
+    // if (Figure1_selected && FirstType_figures.size() != 0){
+    //     FirstType_figures[FirstType_figures.size()-1]->close();
+    //     FirstType_figures.pop_back();
+    //     std::cout << "Figure 1 deleted" << std::endl;
+    // }
+
+    // if (Figure2_selected && SecondType_figures.size() != 0){
+    //     SecondType_figures[SecondType_figures.size()-1]->close();
+    //     SecondType_figures.pop_back();
+    //     std::cout << "Figure 2 deleted" << std::endl;
+    // } 
+    for (uint64_t i = 0; i < FirstType_figures.size(); i++){
+        if (FirstType_figures[i]->selected){
+            FirstType_figures[i]->close();
+            FirstType_figures.erase(FirstType_figures.begin() + i);
+        }
     }
 
-    if (Figure2_selected && SecondType_figures.size() != 0){
-        SecondType_figures[SecondType_figures.size()-1]->close();
-        SecondType_figures.pop_back();
-        std::cout << "Figure 2 deleted" << std::endl;
-    } 
+    for (uint64_t i = 0; i < SecondType_figures.size(); i++){
+        if (SecondType_figures[i]->selected){
+            SecondType_figures[i]->close();
+            SecondType_figures.erase(SecondType_figures.begin() + i);
+        }
+    }
     // else std::cout << "Nothing deleted" << std::endl;
 }
 
@@ -163,17 +179,17 @@ MainWindow::~MainWindow(){
     delete f;
 }
 
-void MainWindow::contextMenuEvent(QContextMenuEvent *event){
-  //menuFigure->exec(event->globalPos());
-    QDialog *qd = new QDialog(this);
-    qd->setModal(true);
-    qd->resize(1000,1000);
-    QLabel *l = new QLabel("Helloooo...",qd);
-    l->show();
-    qd->exec();
-    delete qd;
-}
+// void MainWindow::contextMenuEvent(QContextMenuEvent *event){
+//   //menuFigure->exec(event->globalPos());
+//     QDialog *qd = new QDialog(this);
+//     qd->setModal(true);
+//     qd->resize(1000,1000);
+//     QLabel *l = new QLabel("Helloooo...",qd);
+//     l->show();
+//     qd->exec();
+//     delete qd;
+// }
 
-void MainWindow::FigureClicked(){
-    std::cout << "figure was clicked\n" << std::flush;
+void MainWindow::FigureClicked(std::string Fname){
+    std::cout << "figure " + Fname + " was clicked\n" << std::flush;
 }

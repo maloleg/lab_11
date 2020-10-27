@@ -2,9 +2,15 @@
 
 #include <QPainter>
 #include <iostream>
+#include <QMouseEvent>
+#include <QLabel>
+#include <QDialog>
+#include <QDebug>
 
-Figure::Figure(QWidget *parent) : QWidget(parent), flag_paint(false), flag_resize(false)
+Figure::Figure(QWidget *parent, std::string Fname) : QWidget(parent), flag_paint(false), flag_resize(false), name(Fname)
 {
+  pen.setColor(Qt::black);
+  selected = false;
 }
 
 
@@ -19,6 +25,7 @@ void Figure::paintEvent(QPaintEvent *event)
    if( flag_paint && !flag_resize ) this->resize(mult*w+mult,mult*h+mult);
 
    QPainter painter(this);
+   painter.setPen(pen);
 
    painter.scale(1.0/mult,1.0/mult);
    painter.translate(50,0);
@@ -44,5 +51,53 @@ void Figure::IsClicked(){
 void Figure::mousePressEvent(QMouseEvent *event)
 {
   // std::cout << "lol\n" << std::flush;
-  emit Clicked();
+  if (event->button() == Qt::LeftButton){
+    coords = event->pos();
+    if (pen.color() == Qt::blue) {
+      pen.setColor(Qt::black);
+      selected = false;
+    }
+    else {
+      pen.setColor(Qt::blue);
+      selected = true;
+    }
+    std::cout << event->globalX() <<  "  " << event->globalY() << std::endl;
+    // x = event->globalX();
+    // x = event->globalY();
+    // this->move(mapToParent(event-pos() - coords ));
+    this->repaint();
+    emit Clicked();
+  }
+}
+
+void Figure::mouseMoveEvent(QMouseEvent *event){
+  // if (event->button() == Qt::LeftButton){
+  //   this->setCursor(QCursor(Qt::ArrowCursor));
+  //   pen.setCursor(Qt::black);
+  //   pressed = false;
+  // }
+  QRect r = geometry();
+  std::cout << "x = " << r.x() << ", y = " << r.y() << ", width = " << r.width() << ", height = " << r.height() << std::endl;
+
+
+  if ((event->buttons() & Qt::LeftButton) && mapToParent(event->pos() - coords).x() > 0 && mapToParent(event->pos() - coords).y() > 0 &&
+                                             mapToParent(event->pos() - coords).x() < 900 && mapToParent(event->pos() - coords).y() < 930){
+    this->move(mapToParent(event->pos() - coords));
+    std::cout << "Global x: " << mapToParent(event->pos() - coords).x() << std::endl;
+  }
+}
+
+void Figure::FigureClicked(){
+  std::cout << "figure " + name + " was clicked\n" << std::flush;
+}
+
+void Figure::contextMenuEvent(QContextMenuEvent *event){
+  //menuFigure->exec(event->globalPos());
+    QDialog *qd = new QDialog(this);
+    qd->setModal(true);
+    qd->resize(1000,1000);
+    QLabel *l = new QLabel("Helloooo...",qd);
+    l->show();
+    qd->exec();
+    delete qd;
 }

@@ -34,7 +34,7 @@ static const uint qt_meta_data_MainWindow[] = {
       34,   12,   11,   11, 0x0a,
       48,   11,   11,   11, 0x0a,
       61,   11,   11,   11, 0x0a,
-      77,   11,   11,   11, 0x0a,
+      83,   77,   11,   11, 0x0a,
 
        0        // eod
 };
@@ -42,7 +42,7 @@ static const uint qt_meta_data_MainWindow[] = {
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0checked\0Figure1(bool)\0"
     "Figure2(bool)\0AddFigures()\0DeleteFigures()\0"
-    "FigureClicked()\0"
+    "Fname\0FigureClicked(std::string)\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -55,7 +55,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->Figure2((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 2: _t->AddFigures(); break;
         case 3: _t->DeleteFigures(); break;
-        case 4: _t->FigureClicked(); break;
+        case 4: _t->FigureClicked((*reinterpret_cast< std::string(*)>(_a[1]))); break;
         default: ;
         }
     }
