@@ -55,18 +55,18 @@ QToolBar* MainWindow::createToolBar(){
 
     QToolBar* tb = new QToolBar("ToolBar for figuries buttons");
 
-    QAction* Figure1 = new QAction(QIcon::fromTheme("document-new", QIcon()), "figure 1", this);
+    QAction* Figure1 = new QAction("figure 1", this);
     Figure1->setCheckable(true);
     connect(Figure1, SIGNAL(toggled(bool)), this, SLOT(Figure1(bool)));
 
-    QAction* Figure2 = new QAction(QIcon::fromTheme("document-new", QIcon()), "figure 2", this);
+    QAction* Figure2 = new QAction("figure 2", this);
     Figure2->setCheckable(true);
     connect(Figure2, SIGNAL(toggled(bool)), this, SLOT(Figure2(bool)));
 
     tb->addAction(Figure1); 
     tb->addAction(Figure2);
-    tb->addAction(QIcon::fromTheme("document-new", QIcon()), "Add", this, SLOT(AddFigures())); 
-    tb->addAction(QIcon::fromTheme("document-new", QIcon()), "Delete", this, SLOT(DeleteFigures())); 
+    tb->addAction("Add", this, SLOT(AddFigures())); 
+    tb->addAction("Delete", this, SLOT(DeleteFigures())); 
 
 
     // std::cout << "NOT HERE\n" << std::flush;
@@ -106,7 +106,7 @@ void MainWindow::AddFigures(){
         // Figure *f2 = new Figure(this);
         // f2->move(100,100);
         // f2->show();
-        f = new Figure(this, "1_" + std::to_string(SecondType_figures.size()));
+        f = new Figure(this, "1_" + std::to_string(SecondType_figures.size()), 1);
         connect(f, SIGNAL(Clicked()), f, SLOT(FigureClicked()));
         FirstType_figures.push_back(f);
         FirstType_figures[FirstType_figures.size() - 1]->show();
@@ -117,7 +117,7 @@ void MainWindow::AddFigures(){
         // Figure *f = new Figure(this);
 
 
-        f = new Figure(this, "2_" + std::to_string(SecondType_figures.size()));
+        f = new Figure(this, "2_" + std::to_string(SecondType_figures.size()), 2);
         connect(f, SIGNAL(Clicked()), f, SLOT(FigureClicked()));
         SecondType_figures.push_back(f);
         SecondType_figures[SecondType_figures.size() - 1]->show();
@@ -125,7 +125,7 @@ void MainWindow::AddFigures(){
     }
     if (Figure1_selected && !Figure2_selected){
         std::cout << "Figure 1 added" << std::endl;
-        f = new Figure(this, "1_" + std::to_string(SecondType_figures.size()));
+        f = new Figure(this, "1_" + std::to_string(SecondType_figures.size()), 1);
         connect(f, SIGNAL(Clicked()), f, SLOT(FigureClicked()));
         FirstType_figures.push_back(f);
         FirstType_figures[FirstType_figures.size() - 1]->show();
@@ -133,7 +133,7 @@ void MainWindow::AddFigures(){
     }
     if (!Figure1_selected && Figure2_selected){
         std::cout << "Figure 2 added" << std::endl;
-        f = new Figure(this, "2_" + std::to_string(SecondType_figures.size()));
+        f = new Figure(this, "2_" + std::to_string(SecondType_figures.size()), 2);
         connect(f, SIGNAL(Clicked()), f, SLOT(FigureClicked()));
         SecondType_figures.push_back(f);
         SecondType_figures[SecondType_figures.size() - 1]->show();
@@ -163,6 +163,7 @@ void MainWindow::DeleteFigures(){
         if (FirstType_figures[i]->selected){
             FirstType_figures[i]->close();
             FirstType_figures.erase(FirstType_figures.begin() + i);
+            i--;
         }
     }
 
@@ -170,6 +171,7 @@ void MainWindow::DeleteFigures(){
         if (SecondType_figures[i]->selected){
             SecondType_figures[i]->close();
             SecondType_figures.erase(SecondType_figures.begin() + i);
+            i--;
         }
     }
     // else std::cout << "Nothing deleted" << std::endl;

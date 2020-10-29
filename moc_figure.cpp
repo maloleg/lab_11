@@ -22,7 +22,7 @@ static const uint qt_meta_data_Figure[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -35,13 +35,15 @@ static const uint qt_meta_data_Figure[] = {
  // slots: signature, parameters, type, tag, flags
       18,    7,    7,    7, 0x0a,
       30,    7,    7,    7, 0x0a,
+      46,    7,    7,    7, 0x0a,
+      57,    7,    7,    7, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Figure[] = {
     "Figure\0\0Clicked()\0IsClicked()\0"
-    "FigureClicked()\0"
+    "FigureClicked()\0Rotation()\0RotationDir()\0"
 };
 
 void Figure::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -53,6 +55,8 @@ void Figure::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 0: _t->Clicked(); break;
         case 1: _t->IsClicked(); break;
         case 2: _t->FigureClicked(); break;
+        case 3: _t->Rotation(); break;
+        case 4: _t->RotationDir(); break;
         default: ;
         }
     }
@@ -91,9 +95,9 @@ int Figure::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 5;
     }
     return _id;
 }
