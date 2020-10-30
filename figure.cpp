@@ -26,6 +26,7 @@
 #include <QMouseEvent>
 #include <QLineEdit>
 #include "dialog.h"
+// #include <QDebug>
 Figure::Figure(QWidget *parent, std::string Fname, int t) : QWidget(parent), flag_paint(false), flag_resize(false), name(Fname)
 {
   type = t;
@@ -39,6 +40,7 @@ Figure::Figure(QWidget *parent, std::string Fname, int t) : QWidget(parent), fla
   D = this->fRand(0, 5*(height()  -0.0)/3);
   E = this->fRand(0, 5*(width()  -0.0)/4);
   F = this->fRand(0, 5*(width()  -0.0)/4);
+  // D = new figureDialog(0);
 
   std::cout << A << " " << B << " " << C << " " << D << " " << E << " " << F << " " << std::endl;
    // = new QPainter(this);
@@ -149,9 +151,14 @@ void Figure::mousePressEvent(QMouseEvent *event)
     emit Clicked();
   }
   else if(event->button() == Qt::RightButton){
-      figureDialog *D = new figureDialog(0);
+      figureDialog *D = new figureDialog(this);
       D->show();
-      std::cout << "afaegaw" << std::endl;
+
+      if (D->exec() == QDialog::Accepted){
+
+        if (D->PointA().size() > 0) std::cout << D->PointA().toStdString();
+    }
+      // std::cout << "afaegaw" << std::endl;
 
   }
 }

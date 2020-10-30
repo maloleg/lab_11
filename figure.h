@@ -39,6 +39,8 @@ class Figure : public QWidget
     double D_temp;
     double E_temp;
     double F_temp;
+
+    // figureDialog *D;
     // QPainter painter;
 
 

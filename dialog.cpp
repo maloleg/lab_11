@@ -30,8 +30,7 @@ figureDialog::figureDialog(QWidget* pwgt):QDialog(pwgt, Qt::WindowTitleHint | Qt
     QPushButton* Cancel = new QPushButton("&Cancel");
 
 
-    connect(Ok, SIGNAL(clicked()), SLOT(accept()));
-    connect(Cancel, SIGNAL(clicked()), SLOT(reject()));
+    
 
 
     QGridLayout* Layout = new QGridLayout;
@@ -54,6 +53,9 @@ figureDialog::figureDialog(QWidget* pwgt):QDialog(pwgt, Qt::WindowTitleHint | Qt
     Layout->addWidget(Ok, 7,0);
     Layout->addWidget(Cancel, 7, 1);
     setLayout(Layout);
+
+    connect(Ok, SIGNAL(clicked()), this, SLOT(accept()));
+    connect(Cancel, SIGNAL(clicked()), this, SLOT(reject()));
 }
 QString figureDialog::PointA() const{
     return InputLine_PointA->text();
